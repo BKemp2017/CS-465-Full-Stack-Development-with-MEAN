@@ -1,3 +1,4 @@
+const request = require('request');
 const fs = require('fs');
 const path = require('path');
 
@@ -27,15 +28,54 @@ try {
     console.error('Error reading or parsing title data:', error);
 }
 
-/* GET travel view */
-const travel = (req, res) => {
-    // Get the page title from the title data
-    const pageTitle = title['1']['title'];
+const apiOptions = {
+    server: "http://localhost:3000"
+};
+
+/* GET travel list */
+const travelList = (req, res) => {
+    const path = '/api/trips';
+    const requestOptions = {
+        url: `${apiOptions.server}${path}`,
+        method: 'GET',
+        json: {}
+    };
+    console.info(`>> travelList calling ${requestOptions.url}`);
+
+    request(
+        requestOptions,
+        (err, response, body) => {
+            if (err) {
+                console.error(err);
+            }
+            renderTravelList(req, res, body);
+        }
+    );
+};
+
+const renderTravelList = (req, res, responseBody) => {
+    let message = null;
+    let pageTitle = title['1']['title']; 
+
+    if (!(responseBody instanceof Array)) {
+        message = 'API lookup error';
+        responseBody = [];
+    } else {
+        if (!responseBody.length) {
+            message = 'No trips exist in database';
+        }
+    }
     res.render('travel', {
         title: pageTitle,
-        trips: trips,
+        trips: responseBody,
+        message
     });
 };
 
-module.exports = { travel };
+module.exports = {
+    travelList
+};
 
+module.exports = {
+    travelList
+};
