@@ -36,11 +36,9 @@ process.on('SIGTERM', () => {
     });
 });
 
-function gracefulShutdown(msg, callback) {
-    mongoose.connection.close(() => {
-        console.log(`Mongoose disconnected through ${msg}`);
-        callback();
-    });
+function gracefulShutdown(msg) {
+    mongoose.connection.close();
+    console.log(`Mongoose disconnected through ${msg}`);
 }
 
 require('./travlr');

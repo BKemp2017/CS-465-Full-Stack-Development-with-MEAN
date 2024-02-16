@@ -16,6 +16,8 @@ const apiRouter = require('./app_api/routes/index');
 
 var app = express();
 
+
+
 // view engine setup
 app.set('views', path.join(__dirname, 'app_server', 'views'));
 app.set('view engine', 'hbs');
@@ -28,6 +30,15 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+const cors = require('cors');
+// Example of using cors with options
+app.use(cors({
+  origin: 'http://localhost:4200',
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Origin', 'X-Requested-With', 'Content-Type', 'Accept']
+}));
+
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
