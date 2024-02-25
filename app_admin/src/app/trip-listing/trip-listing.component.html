@@ -1,0 +1,14 @@
+<div class="row mb-4">
+    <div class="col">
+        <!-- Add Trip button shows only if logged in -->
+        <button *ngIf="isLoggedIn$ | async" (click)="addTrip()" type="button" class="btn btn-primary">Add Trip</button>
+    </div>
+</div>
+
+<div class="row g-4">
+    <div class="col-md-3" *ngFor="let trip of trips">
+        <!-- Pass isLoggedIn$ observable and listen for onDelete event -->
+        <app-trip-card [trip]="trip" [isLoggedIn$]="isLoggedIn$" (onDelete)="deleteTrip(trip.code)"></app-trip-card>
+    </div>
+</div>
+
