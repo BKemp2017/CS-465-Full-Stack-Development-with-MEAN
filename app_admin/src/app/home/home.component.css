@@ -1,0 +1,11 @@
+.centered-container {
+    display: flex;
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    height: 100vh; /* Take up full viewport height */
+    text-align: center; /* Ensure text within the container is centered */
+}
+
+.container h2 {
+    margin-top: 0; /* Remove any default top margin from the heading */
+}

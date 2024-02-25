@@ -52,20 +52,23 @@ export class AuthenticationService {
 
   // Method to handle user registration
   public register(credentials: { name: string; email: string; password: string }): Observable<AuthResponse> {
+    console.log("Sending registration request to server:", credentials); // Log the credentials being sent
     const obs = new AsyncSubject<AuthResponse>();
-    this.http.post<AuthResponse>(`${this.API_BASE_URL}/register`, credentials)
-      .subscribe({
-        next: resp => {
-          // Update user and token upon successful registration
-          this.userSubject.next({ name: credentials.name, email: credentials.email });
-          this.tokenSubject.next(resp.token);
-          obs.next(resp);
-          obs.complete();
-        },
-        error: e => obs.error(e)
-      });
+  
+    this.http.post<AuthResponse>(`${this.API_BASE_URL}/register`, credentials).subscribe({
+      next: resp => {
+        // Update user and token upon successful registration
+        this.userSubject.next({ name: credentials.name, email: credentials.email });
+        this.tokenSubject.next(resp.token);
+        obs.next(resp);
+        obs.complete();
+      },
+      error: e => obs.error(e)
+    });
+  
     return obs;
   }
+  
 
   // Method to handle user logout
   public logout() {

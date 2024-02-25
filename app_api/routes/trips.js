@@ -7,8 +7,9 @@ const auth = jwt({ secret: process.env.JWT_SECRET, algorithms: ['HS512']});
 
 router.get('/', controller.tripsList);
 router.get('/:tripCode', controller.tripsFindCode);
-router.post('/', auth,  controller.addTrip);
+router.post('/', auth, controller.addTrip);
 router.put('/:tripCode', auth, controller.updateTrip);
+router.delete('/:tripCode', auth, controller.deleteTrip); 
 
 module.exports = router;
 

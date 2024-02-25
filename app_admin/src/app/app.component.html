@@ -1,19 +1,25 @@
-<nav class="navbar navbar-dark navbar-expand-lg bg-dark" data-bd-theme=""dark>
+<nav class="navbar navbar-dark navbar-expand-lg bg-dark" data-bd-theme="dark">
   <div class="container-fluid">
-    <a class="navbar-brand" routerLink="/">{{ title }}</a>
+    <!-- Logo -->
+    <a class="navbar-brand" routerLink="/">
+      <img src="assets/images/logo.png" alt="Logo" style="height: 60px;">
+    </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse" id="navbarScroll">
       <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+        <!-- Home Link -->
         <li class="nav-item">
           <a class="nav-link" routerLink="/" routerLinkActive="active">Home</a>
         </li>
+        <!-- Trips Link -->
         <li class="nav-item">
-          <a class="nav-link" routerLink="/add-trip">Add Trip</a>
+          <a class="nav-link" routerLink="/list-trips" routerLinkActive="active">Trips</a>
         </li>
       </ul>
       <div class="navbar-nav d-flex">
+        <!-- Authentication Links -->
         <a class="nav-link" routerLink="/logout" *ngIf="isLoggedIn(); else logIn">Log out</a>
         <ng-template #logIn>
           <a class="nav-link" routerLink="/login">Log in</a>
@@ -25,3 +31,5 @@
 <div class="container-fluid mt-4 mr-4 ml-4">
   <router-outlet></router-outlet>
 </div>
+
+

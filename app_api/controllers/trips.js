@@ -87,7 +87,18 @@ const updateTrip = (req, res) => {
   });
 };
 
-
+const deleteTrip = async (req, res) => {
+  try {
+    const deletedTrip = await Model.findOneAndDelete({ code: req.params.tripCode });
+    if (!deletedTrip) {
+      return res.status(404).json({ message: `No trip found for code: ${req.params.tripCode}` });
+    }
+    res.status(200).json({ message: "Trip deleted successfully" });
+  } catch (error) {
+    console.error("Error deleting trip:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+};
 
 
 module.exports = {
@@ -95,4 +106,5 @@ module.exports = {
   tripsFindCode,
   addTrip,
   updateTrip,
+  deleteTrip,
 };
