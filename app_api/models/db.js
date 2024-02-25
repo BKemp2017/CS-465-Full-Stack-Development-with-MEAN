@@ -42,3 +42,4 @@ function gracefulShutdown(msg) {
 }
 
 require('./travlr');
+require('./user');

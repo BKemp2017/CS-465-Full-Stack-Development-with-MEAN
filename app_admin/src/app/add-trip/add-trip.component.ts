@@ -41,7 +41,7 @@ export class AddTripComponent {
       this.tripService.addTrip(this.addForm.value).subscribe({
         next: () => {
           // Trip added successfully, navigate to some page
-          this.router.navigate(['/']);
+          this.router.navigate(['/list-trips']);
         },
         error: (error) => {
           // Handle error

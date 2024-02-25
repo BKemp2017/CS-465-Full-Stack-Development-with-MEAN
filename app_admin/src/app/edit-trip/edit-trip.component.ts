@@ -52,7 +52,7 @@ export class EditTripComponent implements OnInit {
       this.tripService.updateTrip(tripCode, this.editForm.value).subscribe({
         next: () => {
           // Trip updated successfully, navigate to some page
-          this.router.navigate(['/']);
+          this.router.navigate(['/list-trips']);
         },
         error: (error) => {
           // Handle error

@@ -1,6 +1,7 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router'; 
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-trip-card',
@@ -13,11 +14,15 @@ import { RouterModule } from '@angular/router';
   styleUrls: ['./trip-card.component.css']
 })
 export class TripCardComponent implements OnInit {
-  @Input('trip') trip: any;
+  @Input() trip: any;
+  @Input() isLoggedIn$?: Observable<boolean>;
+  @Output() onDelete = new EventEmitter<void>(); // Add this line
 
   constructor() { }
 
-  ngOnInit(): void {
+  ngOnInit(): void { }
 
+  deleteTrip(): void {
+    this.onDelete.emit(); // Notify the parent component when the delete button is clicked
   }
 }

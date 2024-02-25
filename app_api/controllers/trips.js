@@ -1,5 +1,25 @@
 const mongoose = require("mongoose");
 const Model = mongoose.model("trips");
+const User = mongoose.model("users");
+
+
+const getUser = async (req, res, callback) => {
+  if (req.payload && req.payload.email) {
+    try {
+      const user = await User.findOne({ email: req.payload.email });
+      if (!user) {
+        return res.status(404).json({ message: "User not found" });
+      }
+      // Proceed with the callback, passing the user's name or any other needed info
+      callback(req, res, user.name);
+    } catch (err) {
+      console.error(err);
+      return res.status(404).json(err);
+    }
+  } else {
+    return res.status(401).json({ message: "Unauthorized" });
+  }
+};
 
 const tripsList = async (req, res) => {
   try {
@@ -34,42 +54,40 @@ const tripsFindCode = async (req, res) => {
   }
 };
 
-const addTrip = async (req, res) => {
-  try {
-    const newTrip = new Model(req.body); // Assuming req.body contains trip data
-    await newTrip.save();
-    return res.status(201).json(newTrip);
-  } catch (error) {
-    console.error("Error adding trip:", error);
-    return res.status(500).json({ error: "Internal server error" });
-  }
-};
-
-const updateTrip = async (req, res) => {
-  const tripCode = req.params.tripCode;
-  const updatedTripData = req.body; // Assuming req.body contains updated trip data
-
-  try {
-    // Find the trip by code and update it with the new data
-    const updatedTrip = await Model.findOneAndUpdate(
-      { code: tripCode }, // Filter by trip code
-      updatedTripData, // Updated trip data
-      { new: true } // Return the updated trip after the update
-    );
-
-    if (!updatedTrip) {
-      // If no trip is found for the given code, return 404 Not Found
-      return res.status(404).json({ message: `No trip found for code: ${tripCode}` });
+const addTrip = (req, res) => {
+  getUser(req, res, async (req, res, userName) => {
+    try {
+      const newTrip = new Model(req.body);
+      await newTrip.save();
+      res.status(201).json(newTrip);
+    } catch (error) {
+      console.error("Error adding trip:", error);
+      res.status(500).json({ error: "Internal server error" });
     }
-
-    // If the trip is successfully updated, return it in the response
-    return res.status(200).json(updatedTrip);
-  } catch (error) {
-    // If an error occurs during the update operation, return 500 Internal Server Error
-    console.error("Error updating trip:", error);
-    return res.status(500).json({ error: "Internal server error" });
-  }
+  });
 };
+
+
+const updateTrip = (req, res) => {
+  getUser(req, res, async (req, res, userName) => {
+    try {
+      const updatedTrip = await Model.findOneAndUpdate(
+        { code: req.params.tripCode },
+        req.body,
+        { new: true }
+      );
+      if (!updatedTrip) {
+        return res.status(404).json({ message: `No trip found for code: ${req.params.tripCode}` });
+      }
+      res.status(200).json(updatedTrip);
+    } catch (error) {
+      console.error("Error updating trip:", error);
+      res.status(500).json({ error: "Internal server error" });
+    }
+  });
+};
+
+
 
 
 module.exports = {
