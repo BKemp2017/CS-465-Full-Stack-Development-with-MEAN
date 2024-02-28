@@ -17,7 +17,6 @@ export class HomeComponent implements OnInit {
   }
 
   public isLoggedIn(): boolean { 
-    // Assuming AuthenticationService has a method named isLoggedIn
     return this.authService.isLoggedIn(); 
   }
 
