@@ -17,7 +17,7 @@ const register = async (req, res) => {
 
     try {
         await user.save();
-        const token = user.generateJwt(); // Ensure this method is properly defined in your User model
+        const token = user.generateJwt(); 
         return res.status(200).json({ token });
     } catch(e) {
         return res.status(400).json(e);
@@ -38,13 +38,13 @@ const login = (req, res, next) => {
             return res.status(401).json(info);
         }
 
-        // Ensure your setup supports req.logIn (e.g., using passport.initialize() and passport.session() middleware)
+        
         req.logIn(user, (err) => {
             if (err) {
                 console.error(err);
                 return res.status(500).json({ 'message': 'Error logging in' });
             }
-            const token = user.generateJwt(); // Ensure this method is properly defined in your User model
+            const token = user.generateJwt(); 
             return res.status(200).json({ token });
         });
     })(req, res, next);
