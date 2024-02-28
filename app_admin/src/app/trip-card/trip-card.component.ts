@@ -16,13 +16,12 @@ import { Observable } from 'rxjs';
 export class TripCardComponent implements OnInit {
   @Input() trip: any;
   @Input() isLoggedIn$?: Observable<boolean>;
-  @Output() onDelete = new EventEmitter<void>(); // Add this line
-
+  @Output() onDelete = new EventEmitter<void>(); 
   constructor() { }
 
   ngOnInit(): void { }
 
   deleteTrip(): void {
-    this.onDelete.emit(); // Notify the parent component when the delete button is clicked
+    this.onDelete.emit(); 
   }
 }
