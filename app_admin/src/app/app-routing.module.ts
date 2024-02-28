@@ -26,7 +26,6 @@ const logoutGuard: CanActivateFn = (next: ActivatedRouteSnapshot, state: RouterS
     return true;
 };
 
-// Define your routes here
 export const routes: Routes = [
   { path: '', component: HomeComponent, pathMatch: 'full' },
   { path: 'list-trips', component:TripListingComponent },
@@ -35,7 +34,6 @@ export const routes: Routes = [
   { path: 'logout', component: LoginComponent, canActivate: [logoutGuard] },
   { path: 'login', component: LoginComponent },
   { path: 'register', component: RegisterComponent }
-  // Add more routes as needed
 ];
 
 @NgModule({
