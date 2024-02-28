@@ -27,8 +27,8 @@ export class TripsService {
 
   public getTrips(): Observable<Trip[]> {
     console.log('Inside TripDataService#getTrips');
-    const headers = this.getHeaders(); // Use headers with Authorization token
-    return this.http.get<Trip[]>(`${this.API_BASE_URL}/trips`, { headers }).pipe( // Include headers in the request
+    const headers = this.getHeaders(); 
+    return this.http.get<Trip[]>(`${this.API_BASE_URL}/trips`, { headers }).pipe( 
       catchError(this.handleError)
     );
   }
@@ -43,8 +43,8 @@ export class TripsService {
 
   public getTrip(code: string): Observable<Trip> {
     console.log('Inside TripDataService#getTrip', code);
-    const headers = this.getHeaders(); // Use headers with Authorization token
-    return this.http.get<Trip>(`${this.API_BASE_URL}/trips/${code}`, { headers }).pipe( // Include headers in the request
+    const headers = this.getHeaders(); 
+    return this.http.get<Trip>(`${this.API_BASE_URL}/trips/${code}`, { headers }).pipe( 
       catchError(this.handleError)
     );
   }
@@ -58,15 +58,14 @@ export class TripsService {
   }
 
   public deleteTrip(tripId: string): Observable<any> {
-    const headers = this.getHeaders(); // Ensure you're including the authorization headers
+    const headers = this.getHeaders(); 
     return this.http.delete(`${this.API_BASE_URL}/trips/${tripId}`, { headers }).pipe(
-      catchError(this.handleError) // Leverage the existing error handling method
+      catchError(this.handleError) 
     );
   }
   
   private handleError(error: HttpErrorResponse): Observable<never> {
     console.error('Something has gone wrong', error);
-    // You can customize the error message or handle different types of errors here
     return throwError(() => new Error('An error occurred, please try again later.'));
   }
 }
