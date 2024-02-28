@@ -31,7 +31,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(cors({
-  origin: 'http://localhost:4200', // Adjust according to your Angular app's URL
+  origin: 'http://localhost:4200', 
   credentials: true,
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
