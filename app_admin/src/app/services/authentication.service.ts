@@ -16,7 +16,6 @@ export class AuthenticationService {
   public tokenSubject = new BehaviorSubject<string | null>(null);
 
   constructor(private http: HttpClient) {
-    // Initialize userSubject and tokenSubject with values from localStorage if available
     this.userSubject.next(this.parseStoredUser());
     this.tokenSubject.next(this.parseStoredToken());
   }
@@ -27,7 +26,6 @@ export class AuthenticationService {
     return storedUser ? JSON.parse(storedUser) : null;
   }
 
-  // Method to parse and return token from localStorage with fallback to null
   private parseStoredToken(): string | null {
     const storedToken = localStorage.getItem('token');
     return storedToken ? JSON.parse(storedToken) : null;
